@@ -1,0 +1,325 @@
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+/* PDF.js styles */
+@import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+@import "react-pdf/dist/esm/Page/TextLayer.css";
+
+/* Professional Enterprise Typography */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Light Mode - Clean & Minimal */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    
+    --primary: 0 0% 15%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 10%;
+    
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 10%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 15%;
+    --radius: 0.75rem;
+
+    /* File types */
+    --pdf: 0 70% 55%;
+    --excel: 142 55% 42%;
+    --word: 217 70% 55%;
+    --markdown: 270 60% 55%;
+    --plain: 0 0% 50%;
+  }
+
+  .dark {
+    /* Dark Mode - ChatGPT-inspired neutral palette */
+    --background: 0 0% 13%;
+    --foreground: 0 0% 93%;
+    
+    --card: 0 0% 13%;
+    --card-foreground: 0 0% 93%;
+    
+    --popover: 0 0% 16%;
+    --popover-foreground: 0 0% 93%;
+    
+    /* Primary is now a warm off-white for buttons/accents */
+    --primary: 0 0% 93%;
+    --primary-foreground: 0 0% 9%;
+    
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 0 0% 93%;
+    
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 55%;
+    
+    --accent: 0 0% 20%;
+    --accent-foreground: 0 0% 93%;
+    
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 0 0% 22%;
+    --input: 0 0% 22%;
+    --ring: 0 0% 60%;
+
+    /* Sidebar - slightly darker than main content */
+    --sidebar: 0 0% 10%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-foreground/10;
+    font-family: 'Public Sans', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', 'Public Sans', 'Segoe UI', Arial, sans-serif;
+    @apply font-semibold tracking-tight;
+  }
+  code, pre {
+    font-family: 'IBM Plex Mono', 'JetBrains Mono', Consolas, monospace;
+  }
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .glass {
+    @apply bg-background/60 backdrop-blur-xl border border-white/5;
+  }
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-xl border border-white/5;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-foreground to-foreground/60;
+  }
+  .sidebar-item-active {
+    @apply bg-accent text-foreground font-medium;
+  }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.15);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.25);
+}
+
+/* Light mode specific - lighter scrollbar */
+:root .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.25);
+}
+
+:root .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.4);
+}
+
+/* Firefox scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
+}
+
+/* Light mode Firefox scrollbar */
+:root .custom-scrollbar {
+  scrollbar-color: hsl(var(--muted-foreground) / 0.25) transparent;
+}
+
+/* Animations */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-reveal {
+  animation: reveal 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* PDF Viewer Styles */
+.pdf-document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pdf-page {
+  @apply bg-white rounded-sm;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  position: relative !important; /* Critical for text layer positioning */
+  overflow: hidden; /* Contains the absolute text layer */
+}
+
+.pdf-page canvas {
+  @apply rounded-sm;
+  display: block; /* Removes bottom spacing */
+  user-select: none; /* Prevent selecting the canvas itself */
+}
+
+/* PDF Text Layer - enables text selection */
+/* react-pdf v7.x uses .textLayer class */
+.textLayer {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  overflow: hidden;
+  opacity: 1; /* Make sure it's not hidden */
+  line-height: 1.0;
+  transform-origin: 0 0;
+  z-index: 2; /* Ensure it's on top of canvas */
+  
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  pointer-events: auto !important;
+}
+
+/* Make text transparent but selectable */
+.textLayer span {
+  color: transparent;
+  position: absolute;
+  white-space: pre;
+  cursor: text !important;
+  transform-origin: 0% 0%;
+  
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  pointer-events: auto !important;
+}
+
+.textLayer span::selection {
+  background: hsl(var(--primary) / 0.3) !important;
+}
+
+.textLayer br {
+  user-select: none;
+}
+
+/* Legacy class names for compatibility */
+.react-pdf__Page__textContent {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  pointer-events: auto !important;
+}
+
+.react-pdf__Page__textContent span {
+  cursor: text !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+.react-pdf__Page__textContent span::selection {
+  background: hsl(var(--primary) / 0.3) !important;
+}
+
+/* PDF Annotation Layer */
+.annotationLayer {
+  pointer-events: auto;
+}
+
+.annotationLayer a {
+  @apply text-primary underline;
+}
+
+.react-pdf__Page__annotations {
+  pointer-events: auto;
+}
+
+.react-pdf__Page__annotations a {
+  @apply text-primary underline;
+}
+
+/* DOCX Viewer Styles */
+/* Let docx-preview handle ALL formatting - we only apply minimal non-conflicting styles */
+
+/* Base container - preserve document's native styling */
+.docx {
+  max-width: 100%;
+  /* Don't override colors - let document use its own */
+}
+
+.docx-wrapper {
+  @apply bg-background;
+  padding: 2rem;
+  max-width: 8.5in;
+  margin: 0 auto;
+}
+
+/* Only style images to ensure they're responsive - don't override document formatting */
+.docx img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Links - minimal styling that doesn't override document colors */
+.docx a {
+  text-decoration: underline;
+}
+
+.docx a:hover {
+  opacity: 0.8;
+}
+
+/* Ensure text is selectable */
+.docx * {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+.docx *::selection {
+  /* Neutral graphite highlight aligned with Atlas theme palette */
+  background: hsl(var(--ring) / 0.22) !important;
+  color: inherit !important;
+}
+
+.dark .docx *::selection {
+  background: hsl(var(--ring) / 0.42) !important;
+  color: inherit !important;
+}
+
+/* Let docx-preview's generated styles take full precedence for:
+   - Fonts, sizes, colors (text-foreground, font-weight, etc.)
+   - Paragraph spacing and margins
+   - Headings (h1, h2, h3, etc.)
+   - Lists (ul, ol, li)
+   - Tables (borders, padding, colors)
+   - Blockquotes
+   - Code blocks
+   All of these are handled by docx-preview's inline styles and generated CSS classes
+*/

@@ -1,0 +1,50 @@
+{
+  "name": "atlas-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "clean": "rimraf .next || rm -rf .next || rmdir /s /q .next 2>nul || true",
+    "dev:clean": "npm run clean && next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "cross-env NEXT_EXPORT=true next build"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
+    "@tanstack/react-query": "^5.56.2",
+    "@tauri-apps/plugin-dialog": "^2.5.0",
+    "@tauri-apps/plugin-fs": "^2.4.5",
+    "@tauri-apps/plugin-shell": "^2.3.4",
+    "apache-arrow": "^21.1.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "docx-preview": "^0.3.6",
+    "framer-motion": "^12.26.2",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.427.0",
+    "monaco-editor": "^0.55.1",
+    "next": "latest",
+    "pdfjs-dist": "^3.11.174",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-markdown": "^10.1.0",
+    "react-pdf": "^7.7.3",
+    "remark-gfm": "^4.0.1",
+    "tailwind-merge": "^2.5.2",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@tauri-apps/api": "^2.0.0",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "cross-env": "^7.0.3",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  }
+}
